@@ -1,13 +1,12 @@
-import { Client } from 'pg'; // Todo: resolver erro: 'Cannot use import statement outside a module'
+import { Client } from 'pg';
 
 async function query(queryObject) {
-    console.log('queryObject: ', queryObject)
     const client = new Client({
-        host: "localhost",
-        port: 5432,
-        user: "postgres",
-        database: "postgres",
-        password: "local_password",
+        host: process.env.POSTGRES_HOST,
+        port: process.env.POSTGRES_PORT,
+        user: process.env.POSTGRES_USER,
+        database: process.env.POSTGRES_DB,
+        password: process.env.POSTGRES_PASSWORD,
     });
     await client.connect();
     const result = await client.query(queryObject);
@@ -15,6 +14,6 @@ async function query(queryObject) {
     return result;
 }
 
-export const database = { // Todo : atualizar para 'export default'
+export const database = {
     query: query
 }
